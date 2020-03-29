@@ -46,7 +46,7 @@ def b2bpayment(request):
     request = {
         "Initiator": Mpesab2bSecurityCredential.initiator_name,
         "SecurityCredential": Mpesab2bSecurityCredential.securitycredential,
-        "CommandID": "BusinessToBusinessTransfer",
+        "CommandID": "BusinessPayment",
         "SenderIdentifierType": Mpesab2bSecurityCredential.partyAshortcode,
         "RecieverIdentifierType": Mpesab2bSecurityCredential.partyBshortcode,
         "Amount": 200,
@@ -74,14 +74,15 @@ def b2cpayment(request):
         "PartyA": LipanaMpesaPassword.Business_short_code,
         "PartyB": 254705413505,
         "Remarks": "busines to customer transaction",
-        "QueueTimeOutURL": "http://your_timeout_url",
-        "ResultURL": "http://your_result_url",
+        "QueueTimeOutURL": "https://5a49179f.ngrok.io/v1/c2b/confirmation",
+        "ResultURL": "https://5a49179f.ngrok.io/v1/c2b/confirmation",
         "Occasion": " "
     }
   
     response = requests.post(api_url, json = request, headers=headers)
     print (response.text)
     return HttpResponse('success')
+    return JsonResponse(response.json())
     
 
 @csrf_exempt
